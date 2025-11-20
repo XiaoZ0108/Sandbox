@@ -1,0 +1,21 @@
+name: main CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  call-template:
+    name: Run CI/CD Template
+    uses: XiaoZ0108/myWorkFlow/.github/workflows/cicd.yaml@v1
+    with:
+      project-name: "my-spring-app"        # Your application's name
+      acr-name: "jpacr" # Your Azure Container Registry name
+      # image-tag: "1.0.50"               # (Optional: uses default if omitted)
+      # java-version: "21"                # (Optional: uses default '17' if omitted)
+      skip-tests: false                   # (Optional: uses default 'false' if omitted)
+    secrets:
+      ACR_USERNAME: ${{ secrets.AZURE_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
