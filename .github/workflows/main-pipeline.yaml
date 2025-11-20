@@ -11,7 +11,7 @@ jobs:
     name: Run CI/CD Template
     uses: XiaoZ0108/myWorkFlow/.github/workflows/cicd.yaml@v1
     with:
-      project-name: "my-spring-app"        # Your application's name
+      project-name: "RestController"        # Your application's name
       acr-name: "jpacr" # Your Azure Container Registry name
       # image-tag: "1.0.50"               # (Optional: uses default if omitted)
       # java-version: "21"                # (Optional: uses default '17' if omitted)
