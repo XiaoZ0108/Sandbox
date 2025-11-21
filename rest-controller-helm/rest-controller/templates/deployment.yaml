@@ -8,12 +8,12 @@ spec:
     replicas: {{ .Values.replicaCount }}
     selector:
         matchLabels:
-            app: {{ include "rest-controller.fullname" . }}
+            app: {{ include "rest-controller.name" . }} #montior on pod with label app=?
     type: ClusterIP
-    template:
+    template: #for pod
         metadata:
             labels:
-                app: {{ include "rest-controller.fullname" . }}
+                app: {{ include "rest-controller.name" . }} #pod tag (must same with selector.matchLabels.app)
         spec:
             containers:
             -   name: {{ .Chart.Name }}

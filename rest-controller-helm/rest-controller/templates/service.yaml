@@ -7,9 +7,9 @@ metadata:
 spec:
     type: ClusterIP
     selector:
-        app: {{ include "rest-controller.name" . }}
-    ports:
-    - port: {{ .Values.service.port }}
+        app: {{ include "rest-controller.name" . }} #monitor on pod tag as in deployment
+    ports: #target port
+    - port: {{ .Values.service.port }} 
       targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: http
