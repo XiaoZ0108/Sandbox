@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ include "rest-controller.fullname" . }}
+    labels:
+        app: {{ include "rest-controller.name" . }}
+spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+        matchLabels:
+            app: {{ include "rest-controller.name" . }} #montior on pod with label app=?
+    type: ClusterIP
+    template: #for pod
+        metadata:
+            labels:
+                app: {{ include "rest-controller.name" . }} #pod tag (must same with selector.matchLabels.app)
+        spec:
+            containers:
+            -   name: {{ .Chart.Name }}
+                image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+                imagePullPolicy: {{ .Values.image.pullPolicy }}
+                env:
+                - name: JAVA_OPTS
+                  value: "-XX:MaxRAMPercentage=75 -XX:MaxMetaspaceSize=1024m"
+                - name: JAVA_TOOL_OPTIONS
+                  value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+                ports:
+                - name: http
+                  containerPort: {{ .Values.service.port }}
+                - name: debug
+                  containerPort: {{ .Values.service.debugPort }}
+                # livenessProbe:
+                #     httpGet:
+                #         path: {{ (.Values.livenessProbe).probePath | default "/actuator/health/liveness" }}
+                #         port: {{ (.Values.livenessProbe).probePort | default "management" }}
+                #     initialDelaySeconds: {{ (.Values.livenessProbe).initialDelaySeconds | default 30 }}
+                #     periodSeconds: {{ (.Values.livenessProbe).periodSeconds | default 10 }}
+                #     successThreshold: {{ (.Values.livenessProbe).successThreshold | default 1 }}
+                #     timeoutSeconds: {{ (.Values.livenessProbe).timeoutSeconds | default 1 }}
+                # readinessProbe:
+                #     httpGet:
+                #         path: {{ (.Values.readinessProbe).probePath | default "/actuator/health/readiness" }}
+                #         port: {{ (.Values.readinessProbe).probePort | default "management" }}
+                #     initialDelaySeconds: {{ (.Values.readinessProbe).initialDelaySeconds | default 30 }}  
+                #     periodSeconds: {{ (.Values.readinessProbe).periodSeconds | default 10 }}
+                #     successThreshold: {{ (.Values.readinessProbe).successThreshold | default 1 }}
+                #     timeoutSeconds: {{ (.Values.readinessProbe).timeoutSeconds | default 1 }}
+                resources:
+                    {{- toYaml .Values.resources | nindent 12 }}

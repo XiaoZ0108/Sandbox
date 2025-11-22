@@ -1,0 +1,10 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: example-class
+spec:
+  controllerName: gateway.nginx.org/nginx-gateway-controller # this is the controller for the nginx gateway , need to match with what controller looking for 
+
+# for self implmentation iguess
+# ngnix gateway fabric deploy one for u ald
+# this file i did't use it

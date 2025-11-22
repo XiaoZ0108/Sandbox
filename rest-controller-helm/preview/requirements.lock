@@ -1,0 +1,6 @@
+dependencies:
+- name: rest-controller
+  repository: file://../rest-controller
+  version: 0.0.1
+digest: sha256:af9a9d7e7aec5ae550810d18d87d990d5103e9b23a2b59b63b32c29160ee41c0
+generated: "2025-11-20T15:43:30.9282282+08:00"

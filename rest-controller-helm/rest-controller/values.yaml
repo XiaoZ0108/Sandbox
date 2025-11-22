@@ -1,0 +1,34 @@
+replicaCount: 1
+
+image:
+  repository: jpacr.azurecr.io/rest-controller
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8080
+  debugPort: 5005
+
+resources:
+  limits:
+    cpu: "1"
+    memory: "1024Mi"
+  requests:
+    cpu: "500m"
+    memory: "512Mi"
+
+livenessProbe:
+  path: "/actuator/health/liveness"
+  port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+
+readinessProbe:
+  path: "/actuator/health/readiness"
+  port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
