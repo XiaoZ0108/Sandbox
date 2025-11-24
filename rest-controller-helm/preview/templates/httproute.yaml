@@ -5,8 +5,6 @@ metadata:
 spec:
     parentRefs:
     - name: example-gateway #reference to gateway.yaml
-    hostnames:
-    - "www.example.com" #path u want to host
     rules:
         - matches:
             - path:

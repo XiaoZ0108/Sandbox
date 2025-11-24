@@ -34,3 +34,8 @@ build/
 
 ### Helm ###
 **/charts/
+
+# Terraform state
+*.tfstate
+*.tfstate.backup
+.terraform/
